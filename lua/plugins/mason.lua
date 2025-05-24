@@ -1,28 +1,53 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- Customize Mason
 
 ---@type LazySpec
 return {
-  -- use mason-tool-installer for automatically installing Mason packages
+  -- use mason-lspconfig for automatic LSP setup
+  {
+    "williamboman/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = {
+        "lua_ls",
+        "pyright",
+        "r_language_server",
+        "bashls",
+        "ts_ls",
+        "html",
+        "cssls",
+        "emmet_ls",
+        "yamlls", -- Keep YAML LSP
+        "jsonls", -- Keep JSON LSP
+        "taplo", -- Keep TOML LSP
+      },
+      automatic_installation = true,
+    },
+  },
+  -- use mason-tool-installer for formatters and linters
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    -- overrides `require("mason-tool-installer").setup(...)`
     opts = {
-      -- Make sure to use the names found in `:Mason`
       ensure_installed = {
-        -- install language servers
-        "lua-language-server",
+        -- Formatters
+        "stylua", -- Lua formatter
+        "shfmt", -- Bash formatter
+        "prettier", -- JavaScript/HTML/CSS/YAML formatter
+        "ruff", -- Python linter/formatter
+        "taplo", -- TOML formatter
 
-        -- install formatters
-        "stylua",
+        -- Linters
+        "yamllint", -- Keep YAML linter only
+        "shellcheck", -- Bash linter
+        "eslint_d", -- JavaScript linter
 
-        -- install debuggers
-        "debugpy",
+        -- Debuggers
+        "debugpy", -- Python debugger
 
-        -- install any other package
+        -- Other tools
         "tree-sitter-cli",
+        "selene", -- Lua linter
       },
+      auto_update = false,
+      run_on_start = true,
     },
   },
 }
